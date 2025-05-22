@@ -16,8 +16,9 @@ const sidebarButtons = [
 
 const Sidebar = () => {
   return (
-    <aside className="w-2/6 flex self-start sticky top-60 px-8">
+    <aside className="w-2/6 hidden md:flex flex-col self-start sticky top-60 px-8">
       <ul className="flex flex-col gap-1 w-full items-end">
+        <h1 className="pr-9 mb-2 font-bold text-lg">Contents</h1>
         {sidebarButtons.map((link) => {
           return <SidebarItem key={link.name} {...link} />;
         })}

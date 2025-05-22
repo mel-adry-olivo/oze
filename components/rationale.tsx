@@ -4,9 +4,10 @@ export default function Rationale() {
       className="flex flex-col gap-4 max-w-[80ch] scroll-mt-14"
       id="rationale"
     >
-      <h1 className="text:base md:text-2xl font-medium text-gray-900">
+      <h1 className="text:base md:text-2xl font-medium text-foreground">
         Rationale
       </h1>
+
       <div className="space-y-4">
         <p className="text-section">
           Efficient agricultural data management is crucial for ensuring the
