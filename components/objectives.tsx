@@ -238,7 +238,7 @@ const Objectives = () => {
   return (
     <>
       <article
-        className="flex flex-col gap-5 max-w-[80ch] scroll-mt-14"
+        className="flex flex-col gap-5 max-w-prose scroll-mt-14"
         id="objectives"
       >
         <h1 className="section-title">Objectives</h1>

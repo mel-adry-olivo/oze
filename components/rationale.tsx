@@ -1,7 +1,7 @@
 export const Rationale = () => {
   return (
     <article
-      className="flex flex-col gap-4 max-w-[80ch] scroll-mt-14"
+      className="flex flex-col gap-4 max-w-prose scroll-mt-14"
       id="rationale"
     >
       <h1 className="section-title">Rationale</h1>
