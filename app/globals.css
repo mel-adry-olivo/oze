@@ -13,6 +13,10 @@
   @apply text-sm md:text-base text-muted-foreground tracking-wide leading-relaxed;
 }
 
+.section-title {
+  @apply text-base md:text-4xl font-medium text-foreground;
+}
+
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {

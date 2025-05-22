@@ -72,7 +72,7 @@ const objectivesData: ObjectivesData = {
         {
           name: "Show the rate of data collection over time",
           query:
-            "SELECT DATE(submitted_at) as date, COUNT(*) FROM submissions GROUP BY DATE(submitted_at);",
+            "SELECT DATE(submitted_at) as date, COUNT(*) \nFROM submissions \nGROUP BY DATE(submitted_at);",
         },
         {
           name: "View overall yield",
@@ -226,7 +226,7 @@ const NestedList: React.FC<
   );
 });
 
-const Objectives: React.FC = () => {
+const Objectives = () => {
   const [open, setOpen] = React.useState(false);
   const [item, setItem] = React.useState<SubItem | undefined>();
 
@@ -241,9 +241,7 @@ const Objectives: React.FC = () => {
         className="flex flex-col gap-5 max-w-[80ch] scroll-mt-14"
         id="objectives"
       >
-        <h1 className="text:base md:text-2xl font-medium text-foreground">
-          Objectives
-        </h1>
+        <h1 className="section-title">Objectives</h1>
         <section className="space-y-3">
           <h4 className="text-base md:text-xl font-semibold text-foreground">
             {objectivesData.general.title}
@@ -264,7 +262,7 @@ const Objectives: React.FC = () => {
               You can click on the objectives to see the query.
             </AlertDescription>
           </Alert>
-          <ul className="md:pl-4 space-y-8">
+          <ul className="space-y-8">
             {objectivesData.specific.map((section, idx) => (
               <li key={idx} className="space-y-3">
                 <div className="flex items-center gap-4">
