@@ -1,5 +1,4 @@
 import { Separator } from "@/components/ui/separator";
-import { rationale } from "@/lib/strings";
 
 export default function Home() {
   return (
@@ -65,11 +64,11 @@ function Rationale() {
       <p className="text-sm md:text-base text-gray-600 tracking-wide leading-relaxed">
         The database architecture is designed to enable reliable storage,
         retrieval, and synchronization of data collected through mobile
-        applications. Field agents can gather information on farmers' profiles,
-        farming practices, crop conditions, and harvest results, even without
-        internet connectivity. Once reconnected, the system automatically
-        synchronizes the data with a centralized database accessible through a
-        web dashboard.
+        applications. Field agents can gather information on farmers&apos;
+        profiles, farming practices, crop conditions, and harvest results, even
+        without internet connectivity. Once reconnected, the system
+        automatically synchronizes the data with a centralized database
+        accessible through a web dashboard.
       </p>
 
       <p className="text-sm md:text-base text-gray-600 tracking-wide leading-relaxed">
