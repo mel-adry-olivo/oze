@@ -12,6 +12,7 @@ import {
 } from "@/components/ui/sheet";
 import { CodeEditor } from "./ui/editor";
 import { Alert, AlertTitle, AlertDescription } from "./ui/alert";
+import { queries } from "@/lib/strings";
 
 // types.ts
 export type SubItem = {
@@ -44,7 +45,7 @@ const objectivesData: ObjectivesData = {
       items: [
         {
           name: "Submit, view, update, and delete collected form data",
-          query: "SELECT * FROM mobile_entry_forms;",
+          query: queries.manage_form_data,
         },
       ],
     },
@@ -53,139 +54,119 @@ const objectivesData: ObjectivesData = {
       items: [
         {
           name: "Create, view, update, and delete farmer profiles",
-          query: "SELECT * FROM farmer_profiles;",
+          query: queries.manage_farmer_profiles,
         },
         {
           name: "Create, view, update, and delete agricultural field records",
-          query: "SELECT * FROM field_records;",
+          query: queries.manange_field_records,
         },
         {
           name: "Display count of submitted form types",
-          query:
-            "SELECT form_type, COUNT(*) FROM submissions GROUP BY form_type;",
+          query: queries.count_of_submitted_forms,
         },
         {
           name: "Show the rate of data collection over time",
-          query:
-            "SELECT DATE(submitted_at) as date, COUNT(*) \nFROM submissions \nGROUP BY DATE(submitted_at);",
+          query: queries.rate_of_data_collection,
         },
         {
           name: "View overall yield",
-          query: "SELECT AVG(yield) as overall_yield FROM yield_data;",
+          query: queries.view_overall_yield,
         },
         {
           name: "View yield by season",
-          query: "SELECT season, AVG(yield) FROM yield_data GROUP BY season;",
+          query: queries.view_yield_by_season,
         },
         {
           name: "View yield by province, municipality, and barangay",
-          query:
-            "SELECT province, municipality, barangay, AVG(yield) FROM yield_data GROUP BY province, municipality, barangay;",
+          query: queries.view_yield_by_location,
         },
         {
           name: "View overall damage assessment by season",
-          query:
-            "SELECT season, AVG(damage_score) FROM damage_assessment GROUP BY season;",
+          query: queries.view_overall_damage_assessment_by_season,
         },
         {
           name: "View overall damage assessment by province, municipality, and barangay",
-          query:
-            "SELECT province, municipality, barangay, AVG(damage_score) FROM damage_assessment GROUP BY province, municipality, barangay;",
+          query: queries.view_overall_damage_assessment_by_location,
         },
         {
           name: "View damage by cause",
-          query:
-            "SELECT cause, COUNT(*) FROM damage_assessment GROUP BY cause;",
+          query: queries.view_damage_by_cause,
         },
         {
           name: "View average fertilizer application frequency per hectare (avg/ha)",
-          query: "SELECT AVG(applications_per_ha) FROM fertilizer_usage;",
+          query: queries.view_fertilizer_application_frequency,
         },
         {
           name: "View most commonly used fertilizer types and brands",
-          query:
-            "SELECT type, brand, COUNT(*) FROM fertilizer_usage GROUP BY type, brand ORDER BY COUNT(*) DESC;",
+          query: queries.view_commonly_used_fertilizer_types_and_brands,
         },
         {
           name: "View average nutrient inputs (NPK/ha)",
-          query:
-            "SELECT AVG(nitrogen), AVG(phosphorus), AVG(potassium) FROM fertilizer_usage;",
+          query: queries.view_avg_nutrient_inputs,
         },
         {
           name: "View most practiced crop establishment methods (e.g., transplanting, direct seeding)",
-          query:
-            "SELECT method, COUNT(*) FROM crop_establishment GROUP BY method;",
+          query: queries.view_most_practiced_crop_establishments,
         },
         {
           name: "View common plant spacing practices",
-          query:
-            "SELECT spacing, COUNT(*) FROM plant_spacing GROUP BY spacing;",
+          query: queries.view_common_plant_spacing_practices,
         },
         {
           name: "View most planted rice varieties",
-          query:
-            "SELECT variety, COUNT(*) FROM rice_varieties GROUP BY variety ORDER BY COUNT(*) DESC;",
+          query: queries.view_most_planted_rice_varieties,
         },
         {
           name: "View total number of registered farmers",
-          query: "SELECT COUNT(*) FROM farmer_profiles;",
+          query: queries.view_total_number_of_registered_farmers,
         },
         {
           name: "View farmer distribution across provinces, municipalities, and barangays",
-          query:
-            "SELECT province, municipality, barangay, COUNT(*) FROM farmer_profiles GROUP BY province, municipality, barangay;",
+          query: queries.view_farmer_distribution_by_location,
         },
         {
           name: "View farmer demographics by age group and gender",
-          query:
-            "SELECT age_group, gender, COUNT(*) FROM farmer_profiles GROUP BY age_group, gender;",
+          query: queries.view_farmer_demographics_by_age_group_and_gender,
         },
         {
           name: "View total land area under rice cultivation across provinces, municipalities, and barangays",
-          query:
-            "SELECT province, municipality, barangay, SUM(area_ha) FROM field_records GROUP BY province, municipality, barangay;",
+          query: queries.view_total_land_area_under_rice_cultivation,
         },
         {
           name: "Compare field counts across provinces, municipalities, and barangays",
-          query:
-            "SELECT province, municipality, barangay, COUNT(*) FROM field_records GROUP BY province, municipality, barangay;",
+          query: queries.compare_field_counts_by_location,
         },
         {
           name: "Compare yield performance across provinces, municipalities, and barangays.",
-          query:
-            "SELECT province, municipality, barangay, AVG(yield) FROM yield_data GROUP BY province, municipality, barangay;",
+          query: queries.compare_field_counts_by_location,
         },
         {
           name: "Compare yield performance by season (dry vs. wet)",
-          query: "SELECT season, AVG(yield) FROM yield_data GROUP BY season;",
+          query: queries.compare_yield_performance_by_season,
         },
         {
           name: "Compare yield performance by crop establishment method",
-          query:
-            "SELECT method, AVG(yield) FROM yield_data JOIN crop_establishment ON yield_data.field_id = crop_establishment.field_id GROUP BY method;",
+          query: queries.compare_yield_by_crop_establishment_method,
         },
         {
           name: "Compare yield performance by rice variety",
-          query: "SELECT variety, AVG(yield) FROM yield_data GROUP BY variety;",
+          query: queries.compare_yield_performance_by_variety,
         },
         {
           name: "Compare overall damage assessments across provinces, municipalities, and barangays",
-          query:
-            "SELECT province, municipality, barangay, AVG(damage_score) FROM damage_assessment GROUP BY province, municipality, barangay;",
+          query: queries.compare_overall_damage_assessment,
         },
         {
           name: "Compare damage assessments by season (dry vs. wet)",
-          query:
-            "SELECT season, AVG(damage_score) FROM damage_assessment GROUP BY season;",
+          query: queries.compare_damage_assessments_by_season,
         },
         {
           name: "Compare damage assessments by cause",
-          query:
-            "SELECT cause, COUNT(*) FROM damage_assessment GROUP BY cause;",
+          query: queries.compare_damage_assessment_by_cause,
         },
         {
           name: "Create, view, update, and delete user accounts",
-          query: "SELECT * FROM user_accounts;",
+          query: queries.manage_user_account,
         },
       ],
     },
@@ -284,7 +265,7 @@ const Objectives = () => {
         <SheetTrigger asChild>
           <span className="hidden">Hidden Trigger</span>
         </SheetTrigger>
-        <SheetContent side="bottom" className="p-4 pb-24">
+        <SheetContent side="bottom" className="p-4 pb-8 ">
           <SheetHeader>
             <SheetTitle className="text-xl md:text-2xl font-semibold flex items-center gap-3">
               <Code size={28} />
