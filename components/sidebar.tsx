@@ -15,7 +15,7 @@ const sidebarButtons = [
     href: "#objectives",
   },
   {
-    name: "Architecture",
+    name: "Database Architecture",
     href: "#architecture",
   },
   {
@@ -26,7 +26,7 @@ const sidebarButtons = [
 
 const Sidebar = () => {
   return (
-    <aside className="w-2/6 hidden md:flex flex-col self-start sticky top-96 px-8">
+    <aside className="w-2/6 hidden md:flex flex-col self-start sticky top-42 px-8">
       <ul className="flex flex-col gap-1 w-full items-end">
         <h1 className="pr-9 mb-2 font-bold text-lg">Contents</h1>
         {sidebarButtons.map((link) => (
@@ -47,7 +47,7 @@ const SidebarItem = ({ name, href, isActive }: SidebarItemProps) => {
   return (
     <Button
       variant="link"
-      className={`cursor-pointer md:text-base font-normal hover:text-foreground ${
+      className={`cursor-pointer md:text-sm font-normal hover:text-foreground ${
         isActive ? "text-foreground font-semibold" : "text-muted-foreground/80"
       }`}
       asChild

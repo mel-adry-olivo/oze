@@ -12,7 +12,7 @@ export default function Home() {
       <div className="flex-1 flex flex-col gap-3 overflow-y-auto hide-scrollbar">
         <ProjectTitle />
         <Separator className="my-2 bg-neutral-300 max-w-prose" />
-        <Separator className="my-1 bg-transparent" />
+        <Separator className="my-4 bg-transparent" />
         <Rationale />
         <Separator className="my-4 bg-transparent" />
         <Separator className="my-2 bg-neutral-300 max-w-prose" />

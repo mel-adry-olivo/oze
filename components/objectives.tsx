@@ -1,10 +1,5 @@
 "use client";
-import {
-  ArrowUpRight,
-  Code,
-  CornerDownRight,
-  MousePointerClick,
-} from "lucide-react";
+import { Code, CornerDownRight, Minus, MousePointerClick } from "lucide-react";
 import React, { memo } from "react";
 import { Button } from "./ui/button";
 import {
@@ -216,8 +211,12 @@ const NestedList: React.FC<
             className={`text-muted-foreground text-sm md:text-base cursor-pointer gap-1 font-normal whitespace-normal text-left leading-snug h-fit w-fit hover:text-foreground flex items-start`}
             onClick={() => onSelect(item)}
           >
+            <CornerDownRight
+              size={22}
+              className="hidden md:block text-muted-foreground/50 pr-1 pt-1 shrink-0"
+            />
             <span className="whitespace-normal break-words">{item.name}</span>
-            <ArrowUpRight className="size-3.5 shrink-0" />
+            {/* <ArrowUpRight className="size-3.5 shrink-0" /> */}
           </Button>
           {/* <Separator className="my-1" /> */}
         </li>
@@ -264,11 +263,11 @@ const Objectives = () => {
           </Alert>
           <ul className="space-y-8">
             {objectivesData.specific.map((section, idx) => (
-              <li key={idx} className="space-y-3">
-                <div className="flex items-center gap-4">
-                  <CornerDownRight
-                    size={20}
-                    className="hidden md:block text-muted-foreground/30"
+              <li key={idx} className="pl-2 space-y-3">
+                <div className="flex items-center gap-2">
+                  <Minus
+                    size={24}
+                    className="hidden md:block text-muted-foreground"
                   />
                   <h5 className="text-base md:text-lg font-medium text-foreground">
                     {section.title}
