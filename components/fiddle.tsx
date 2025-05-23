@@ -13,7 +13,10 @@ export const Fiddle = () => {
         className="has-[>svg]:px-0 items-start justify-start"
         asChild
       >
-        <Link href="#" className="section-title">
+        <Link
+          href="https://www.db-fiddle.com/f/mxhngFs26nRK7CgFdFpnND/4"
+          className="section-title"
+        >
           DB Fiddle <ArrowUpRight className="size-8 shrink-0" />
         </Link>
       </Button>
