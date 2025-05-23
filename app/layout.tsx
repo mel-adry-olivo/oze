@@ -28,10 +28,8 @@ export default function RootLayout({
       lang="en"
       className={`${jetBrainsMono.variable} ${inter.variable} scroll-smooth`}
     >
-      <body
-        className={`flex min-h-screen justify-center antialiased font-mono`}
-      >
-        <main className="max-w-[16000px] mt-16 py-16 px-8">{children}</main>
+      <body className={`min-h-screen antialiased font-mono`} id="title">
+        <main className="w-full">{children}</main>
       </body>
     </html>
   );

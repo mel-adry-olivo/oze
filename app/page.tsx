@@ -5,30 +5,40 @@ import { Rationale } from "@/components/rationale";
 import Objectives from "@/components/objectives";
 import { Architecture } from "@/components/architecture";
 import { ERD } from "@/components/erd";
+import Header from "@/components/header";
+import { Fiddle } from "@/components/fiddle";
 
 export default function Home() {
   return (
-    <div className="flex md:flex-row gap-4 relative">
-      <div className="flex-1 flex flex-col gap-3 overflow-y-auto hide-scrollbar">
-        <ProjectTitle />
-        <Separator className="my-2 bg-neutral-300 max-w-prose" />
-        <Separator className="my-4 bg-transparent" />
-        <Rationale />
-        <Separator className="my-4 bg-transparent" />
-        <Separator className="my-2 bg-neutral-300 max-w-prose" />
-        <Separator className="my-4 bg-transparent" />
-        <Objectives />
-        <Separator className="my-4 bg-transparent" />
-        <Separator className="my-2 bg-neutral-300 max-w-prose" />
-        <Separator className="my-4 bg-transparent" />
-        <Architecture />
-        <Separator className="my-4 bg-transparent" />
-        <Separator className="my-2 bg-neutral-300 max-w-prose" />
-        <Separator className="my-4 bg-transparent" />
-        <ERD />
+    <>
+      <Header />
+      <Separator className="md:hidden my-3 bg-transparent" />
+      <div className="flex flex-row gap-4 relative max-w-[16000px] mt-16 md:py-16 px-8">
+        <div className="flex-1 flex flex-col gap-3 overflow-y-auto hide-scrollbar">
+          <ProjectTitle />
+          <Separator className="my-2 bg-neutral-300 max-w-prose" />
+          <Separator className="my-4 bg-transparent" />
+          <Rationale />
+          <Separator className="my-4 bg-transparent" />
+          <Separator className="my-2 bg-neutral-300 max-w-prose" />
+          <Separator className="my-4 bg-transparent" />
+          <Objectives />
+          <Separator className="my-4 bg-transparent" />
+          <Separator className="my-2 bg-neutral-300 max-w-prose" />
+          <Separator className="my-4 bg-transparent" />
+          <Architecture />
+          <Separator className="my-4 bg-transparent" />
+          <Separator className="my-2 bg-neutral-300 max-w-prose" />
+          <Separator className="my-4 bg-transparent" />
+          <ERD />
+          <Separator className="my-4 bg-transparent" />
+          <Separator className="my-2 bg-neutral-300 max-w-prose" />
+          <Separator className="my-4 bg-transparent" />
+          <Fiddle />
+        </div>
+        <Sidebar />
       </div>
-      <Sidebar />
-    </div>
+    </>
   );
 }
 
@@ -49,9 +59,6 @@ function ProjectTitle() {
         <h2 className="flex text-xs md:text-xs text-muted-foreground/50 ">
           Bagilidad, Calopez, De Guzman, Olivo, Talon, Ulgasan
         </h2>
-        {/* <h3 className="flex text-xs mt-4 md:text-sm text-muted-foreground ">
-          `one-zero-eight`
-        </h3> */}
       </div>
     </div>
   );

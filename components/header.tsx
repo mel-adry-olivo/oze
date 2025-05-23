@@ -1,11 +1,10 @@
 "use client";
 
-import { ArrowUpRight } from "lucide-react";
 import React from "react";
 import { Button } from "./ui/button";
 import Link from "next/link";
 
-const sidebarButtons = [
+const headerItems = [
   {
     name: "Title",
     href: "#title",
@@ -15,7 +14,7 @@ const sidebarButtons = [
     href: "#rationale",
   },
   {
-    name: "Objectives + Queries",
+    name: "Objectives",
     href: "#objectives",
   },
   {
@@ -32,39 +31,38 @@ const sidebarButtons = [
   },
 ];
 
-const Sidebar = () => {
+const Header = () => {
   return (
-    <aside className="w-2/6 hidden md:flex flex-col self-start sticky top-42 px-8">
-      <ul className="flex flex-col gap-1 w-full items-end">
-        <h1 className="pr-9 mb-2 font-bold text-lg">Contents</h1>
-        {sidebarButtons.map((link) => (
-          <SidebarItem key={link.name} {...link} />
+    <header className="w-screen px-8 py-4 md:hidden flex-row  bg-background z-50">
+      <ul className="flex flex-wrap gap-4">
+        {headerItems.map((link) => (
+          <HeaderItem key={link.name} {...link} />
         ))}
       </ul>
-    </aside>
+    </header>
   );
 };
 
-type SidebarItemProps = {
+type HeaderItemProps = {
   name: string;
   href: string;
   isActive?: boolean;
 };
 
-const SidebarItem = ({ name, href, isActive }: SidebarItemProps) => {
+const HeaderItem = ({ name, href, isActive }: HeaderItemProps) => {
   return (
     <Button
       variant="link"
-      className={`cursor-pointer md:text-sm font-normal hover:text-foreground ${
+      className={`cursor-pointer md:text-sm font-normal hover:text-foreground px-0 justify-start has-[>svg]:px-0 ${
         isActive ? "text-foreground font-semibold" : "text-muted-foreground/80"
       }`}
       asChild
     >
-      <Link href={href}>
-        {name} <ArrowUpRight size={20} />
+      <Link href={href} className="p-0">
+        {name}
       </Link>
     </Button>
   );
 };
 
-export default Sidebar;
+export default Header;

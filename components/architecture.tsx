@@ -1,6 +1,6 @@
 import Image from "next/image";
-import ArchitectureImage from "../public/architecture.png";
 import { Separator } from "./ui/separator";
+import ArchitectureImage from "../public/architecture.png";
 
 export const Architecture = () => {
   return (
@@ -9,7 +9,6 @@ export const Architecture = () => {
       id="architecture"
     >
       <h1 className="section-title">Database Architecture</h1>
-      {/* <Separator className="my-2 bg-transparent" /> */}
       <section className="space-y-3">
         <h4 className="text-base md:text-xl font-semibold text-foreground">
           Three-tier Architecture
