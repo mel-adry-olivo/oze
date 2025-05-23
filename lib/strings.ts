@@ -4,445 +4,443 @@ The database architecture is designed to enable reliable storage, retrieval, and
 This system makes sure that the data collected is accurate, easy to understand, and can be visualized using descriptive, comparative and predictive analysis. It helps the Department of Agriculture quickly access useful information. The database plays an important role in supporting smart decision-making and properly distributing resources for managing rice farming in the region.
 `;
 
-const manageForm = `
--------------------------------------------
--------------- CREATE ---------------------
--------------------------------------------
-
--- Field Activity (id auto-generated)
-INSERT INTO field_activities (
-  id,
-  field_id,
-  data_collector_id,
-  data_analyst_id,
-  activity_type,
-  collected_at,
-  img_urls,
-  notes
-)
-VALUES (
-  3,
-  1, -- field_id
-  1, -- data_collector_id
-  NULL, -- data_analyst_id
-  'Baseline Survey',
-  NOW(),
-  '["http://image.com/photo1.jpg"]',
-  'Initial activity notes'
-);
-
-
--- Field Planning
-INSERT INTO field_planning (
-  id,
-  field_activity_id,
-  land_prep_date,
-  planned_crop_establishment_date,
-  planned_crop_establishment_method,
-  total_field_area_ha,
-  monitoring_field_area_sqm,
-  soil_type,
-  current_field_condition,
-  crop_planted,
-  crop_status
-) VALUES (
-  3,
-  3,
-  '2025-05-01',
-  '2025-05-10',
-  'Transplanting',
-  2.5,
-  500.0,
-  'Clay Loam',
-  'Fallow',
-  'Rice',
-  'Not Yet Planted'
-);
-
--- Crop Establishment
-INSERT INTO crop_establishments(
-	id,
-  field_activity_id,
-  actual_crop_establishment_date,
-  actual_crop_establishment_method,
-  seedling_age_at_transplanting,
-  avg_plant_distance_between,
-  avg_plant_distance_within,
-  seeding_rate,
-  direct_seeded_method,
-  rice_variety,
-  rice_variety_no,
-  rice_maturity_duration,
-  seed_type,
-  source_of_good_seeds,
-  type_of_ecosystem,
-  source_of_irrigation,
-  type_of_irrigation
-) VALUES(
-	3,
-  3,
-  '2025-05-12',
-  'Manual Transplanting',
-  21,
-  20.0,
-  15.0,
-  80.0,
-  'None',
-  'IR64',
-  '123',
-  120,
-  'Certified',
-  'DA Certified Supplier',
-  'Irrigated Lowland',
-  'River',
-  'Gravity'
-);
-
--- Fertilization Record
-INSERT INTO fertilization_records(
-  id,
-  field_activity_id,
-  fertilized_area_sqm
-) VALUES (
-  3,
-  3,
-  450.0
-);
-
-
-INSERT INTO fertilizer_applications(
-  id,
-  fertilization_record_id,
-  fertilizer_type,
-  brand_name,
-  nitrogen_content,
-  phosphorus_content,
-  potassium_content,
-  amount,
-  unit,
-  crop_stage_on_application
-) VALUES (
-  3,
-  3,
-  'Complete Fertilizer',
-  'GrowMax',
-  14.0,
-  14.0,
-  14.0,
-  50.0,
-  'kg',
-  'Vegetative'
-);
-
-
--- Crop Cut
-INSERT INTO crop_cuts(
-	id,
-  field_activity_id,
-  crop_cut_date,
-  avg_crop_cut_yield
-) VALUES(
-	3,
-  3,
-  '2025-09-15',
-  5.5
-);
-
--- Monitoring Visit
-INSERT INTO monitoring_visits(
-	id,
-  field_activity_id,
-  date_monitored,
-  crop_status,
-  soil_moisture_status,
-  avg_plant_height
-) VALUES(
-	3,
-  3,
-  '2025-06-01',
-  'Tillering',
-  'Moist',
-  45.0
-);
-
--- Harvest Record
-INSERT INTO harvest_records(
-	id,
-  field_activity_id,
-  harvest_date,
-  harvest_method,
-  bags_harvested,
-  avg_bag_weight_kg,
-  harvested_area_ha,
-  irrigation_adequacy
-) VALUES(
-	3,
-  3,
-  '2025-09-30',
-  'Manual',
-  75,
-  50.0,
-  2.3,
-  'Sufficient'
-);
-
--- Damage Assessment
-INSERT INTO damage_assessments(
-	id,
-  field_activity_id,
-  cause,
-  crop_stage,
-  soil_type,
-  severity,
-  affected_area_ha,
-  observed_pest
-)
-VALUES(
-	3,
-  3,
-  'Flooding',
-  'Vegetative',
-  'Clay Loam',
-  'Moderate',
-  0.2,
-  'Rice Bug'
-);
-
-
--------------------------------------------
--------------- VIEW ---------------------
--------------------------------------------
-
-SELECT
-  fa.id AS field_activity_id,
-  fa.field_id,
-  fa.data_collector_id,
-  fa.activity_type,
-  fa.collected_at,
-  fa.img_urls,
-  fa.notes,
-
-  -- Field Planning
-  fp.land_prep_date,
-  fp.planned_crop_establishment_date,
-  fp.planned_crop_establishment_method,
-  fp.total_field_area_ha,
-  fp.monitoring_field_area_sqm,
-  fp.soil_type,
-  fp.current_field_condition,
-  fp.crop_planted,
-  fp.crop_status,
-
-  -- Crop Establishment
-  ce.actual_crop_establishment_date,
-  ce.actual_crop_establishment_method,
-  ce.seedling_age_at_transplanting,
-  ce.avg_plant_distance_between,
-  ce.avg_plant_distance_within,
-  ce.seeding_rate,
-  ce.direct_seeded_method,
-  ce.rice_variety,
-  ce.rice_variety_no,
-  ce.rice_maturity_duration,
-  ce.seed_type,
-  ce.source_of_good_seeds,
-  ce.type_of_ecosystem,
-  ce.source_of_irrigation,
-  ce.type_of_irrigation,
-
-  -- Fertilization Record
-  fr.id AS fertilization_record_id,
-  fr.fertilized_area_sqm,
-
-  -- Crop Cuts
-  cc.crop_cut_date,
-  cc.avg_crop_cut_yield,
-
-  -- Monitoring Visits
-  mv.date_monitored,
-  mv.crop_status AS monitoring_crop_status,
-  mv.soil_moisture_status,
-  mv.avg_plant_height,
-
-  -- Harvest Records
-  hr.harvest_date,
-  hr.harvest_method,
-  hr.bags_harvested,
-  hr.avg_bag_weight_kg,
-  hr.harvested_area_ha,
-  hr.irrigation_adequacy,
-
-  -- Damage Assessments
-  da.cause,
-  da.crop_stage,
-  da.soil_type AS damage_soil_type,
-  da.severity,
-  da.affected_area_ha,
-  da.observed_pest
-
-FROM field_activities fa
-LEFT JOIN field_planning fp ON fp.field_activity_id = fa.id
-LEFT JOIN crop_establishments ce ON ce.field_activity_id = fa.id
-LEFT JOIN fertilization_records fr ON fr.field_activity_id = fa.id
-LEFT JOIN crop_cuts cc ON cc.field_activity_id = fa.id
-LEFT JOIN monitoring_visits mv ON mv.field_activity_id = fa.id
-LEFT JOIN harvest_records hr ON hr.field_activity_id = fa.id
-LEFT JOIN damage_assessments da ON da.field_activity_id = fa.id
-
-WHERE fa.id = 2;
-
-
--------------------------------------------
--------------- UPDATE ---------------------
--------------------------------------------
-
--- 1. Update Field Activity
-UPDATE field_activities
-SET
-  field_id = 1,
-  data_collector_id = 1,
-  activity_type = 'Planting',
-  img_urls = '["image1.jpg", "image2.jpg"]',
-  notes = 'Initial field survey with photo attachments'
-WHERE id = 2;
-
--- 2. Update Field Planning
-UPDATE field_planning
-SET
-  land_prep_date = '2025-05-01',
-  planned_crop_establishment_date = '2025-05-10',
-  planned_crop_establishment_method = 'Transplanting',
-  total_field_area_ha = 2.50,
-  monitoring_field_area_sqm = 500.00,
-  soil_type = 'Loam',
-  current_field_condition = 'Prepared',
-  crop_planted = 'Rice',
-  crop_status = 'Seedling'
-WHERE field_activity_id = 2;
-
--- 3. Update Crop Establishment
-UPDATE crop_establishments
-SET
-  actual_crop_establishment_date = '2025-05-11',
-  actual_crop_establishment_method = 'Transplanted',
-  seedling_age_at_transplanting = 18,
-  avg_plant_distance_between = 0.25,
-  avg_plant_distance_within = 0.20,
-  seeding_rate = 80.00,
-  direct_seeded_method = 'None',
-  rice_variety = 'NSIC Rc222',
-  rice_variety_no = 'Rc222',
-  rice_maturity_duration = 120,
-  seed_type = 'Certified',
-  source_of_good_seeds = 'PhilRice',
-  type_of_ecosystem = 'Irrigated',
-  source_of_irrigation = 'Canal',
-  type_of_irrigation = 'Flood'
-WHERE field_activity_id = 2;
-
--- 4. Update Fertilization Records
-UPDATE fertilization_records
-SET
-  fertilized_area_sqm = 480.00
-WHERE field_activity_id = 2;
-
--- 5. Update Fertilizer Application (example: application_id = 1, fertilization_record_id = 1)
-UPDATE fertilizer_applications
-SET
-  fertilizer_type = 'Complete',
-  brand_name = 'GrowFast',
-  nitrogen_content = 14.00,
-  phosphorus_content = 14.00,
-  potassium_content = 14.00,
-  amount = 50.00,
-  unit = 'kg',
-  crop_stage_on_application = 'Early vegetative'
-WHERE id = 1 AND fertilization_record_id = 1;
-
--- 6. Update Crop Cuts
-UPDATE crop_cuts
-SET
-  crop_cut_date = '2025-08-15',
-  avg_crop_cut_yield = 4.50
-WHERE field_activity_id = 2;
-
--- 7. Update Monitoring Visits
-UPDATE monitoring_visits
-SET
-  date_monitored = '2025-06-01',
-  crop_status = 'Tillering',
-  soil_moisture_status = 'Moist',
-  avg_plant_height = 35.00
-WHERE field_activity_id = 2;
-
-
--- 8. Update Harvest Records
-UPDATE harvest_records
-SET
-  harvest_date = '2025-09-20',
-  harvest_method = 'Manual',
-  bags_harvested = 60,
-  avg_bag_weight_kg = 50.00,
-  harvested_area_ha = 2.00,
-  irrigation_adequacy = 'Adequate'
-WHERE field_activity_id = 2;
-
--- 9. Update Damage Assessments
-UPDATE damage_assessments
-SET
-  cause = 'Pest',
-  crop_stage = 'Booting',
-  soil_type = 'Loam',
-  severity = 'Moderate',
-  affected_area_ha = 0.5,
-  observed_pest = 'Brown Planthopper'
-WHERE field_activity_id = 2;
-
--------------------------------------------
--------------- DELETE ---------------------
--------------------------------------------
-
--- 1. Delete Fertilizer Applications
-DELETE FROM fertilizer_applications
-WHERE fertilization_record_id IN (
-  SELECT id FROM fertilization_records WHERE field_activity_id = 2
-);
-
--- 2. Delete Fertilization Records
-DELETE FROM fertilization_records
-WHERE field_activity_id = 2;
-
--- 3. Delete Crop Cuts
-DELETE FROM crop_cuts
-WHERE field_activity_id = 2;
-
--- 4. Delete Monitoring Visits
-DELETE FROM monitoring_visits
-WHERE field_activity_id = 2;
-
--- 5. Delete Harvest Records
-DELETE FROM harvest_records
-WHERE field_activity_id = 2;
-
--- 6. Delete Damage Assessments
-DELETE FROM damage_assessments
-WHERE field_activity_id = 2;
-
--- 7. Delete Crop Establishments
-DELETE FROM crop_establishments
-WHERE field_activity_id = 2;
-
--- 8. Delete Field Planning
-DELETE FROM field_planning
-WHERE field_activity_id = 2;
-
--- 9. Finally, delete Field Activity itself
-DELETE FROM field_activities
-WHERE id = 2;
-`;
-
 export const queries = {
-  manage_form_data: manageForm,
+  manage_form_data: `
+    -------------------------------------------
+    -------------- CREATE ---------------------
+    -------------------------------------------
+
+    -- Field Activity (id auto-generated)
+    INSERT INTO field_activities (
+      id,
+      field_id,
+      data_collector_id,
+      data_analyst_id,
+      activity_type,
+      collected_at,
+      img_urls,
+      notes
+    )
+    VALUES (
+      3,
+      1, -- field_id
+      1, -- data_collector_id
+      NULL, -- data_analyst_id
+      'Baseline Survey',
+      NOW(),
+      '["http://image.com/photo1.jpg"]',
+      'Initial activity notes'
+    );
+
+
+    -- Field Planning
+    INSERT INTO field_planning (
+      id,
+      field_activity_id,
+      land_prep_date,
+      planned_crop_establishment_date,
+      planned_crop_establishment_method,
+      total_field_area_ha,
+      monitoring_field_area_sqm,
+      soil_type,
+      current_field_condition,
+      crop_planted,
+      crop_status
+    ) VALUES (
+      3,
+      3,
+      '2025-05-01',
+      '2025-05-10',
+      'Transplanting',
+      2.5,
+      500.0,
+      'Clay Loam',
+      'Fallow',
+      'Rice',
+      'Not Yet Planted'
+    );
+
+    -- Crop Establishment
+    INSERT INTO crop_establishments(
+      id,
+      field_activity_id,
+      actual_crop_establishment_date,
+      actual_crop_establishment_method,
+      seedling_age_at_transplanting,
+      avg_plant_distance_between,
+      avg_plant_distance_within,
+      seeding_rate,
+      direct_seeded_method,
+      rice_variety,
+      rice_variety_no,
+      rice_maturity_duration,
+      seed_type,
+      source_of_good_seeds,
+      type_of_ecosystem,
+      source_of_irrigation,
+      type_of_irrigation
+    ) VALUES(
+      3,
+      3,
+      '2025-05-12',
+      'Manual Transplanting',
+      21,
+      20.0,
+      15.0,
+      80.0,
+      'None',
+      'IR64',
+      '123',
+      120,
+      'Certified',
+      'DA Certified Supplier',
+      'Irrigated Lowland',
+      'River',
+      'Gravity'
+    );
+
+    -- Fertilization Record
+    INSERT INTO fertilization_records(
+      id,
+      field_activity_id,
+      fertilized_area_sqm
+    ) VALUES (
+      3,
+      3,
+      450.0
+    );
+
+
+    INSERT INTO fertilizer_applications(
+      id,
+      fertilization_record_id,
+      fertilizer_type,
+      brand_name,
+      nitrogen_content,
+      phosphorus_content,
+      potassium_content,
+      amount,
+      unit,
+      crop_stage_on_application
+    ) VALUES (
+      3,
+      3,
+      'Complete Fertilizer',
+      'GrowMax',
+      14.0,
+      14.0,
+      14.0,
+      50.0,
+      'kg',
+      'Vegetative'
+    );
+
+
+    -- Crop Cut
+    INSERT INTO crop_cuts(
+      id,
+      field_activity_id,
+      crop_cut_date,
+      avg_crop_cut_yield
+    ) VALUES(
+      3,
+      3,
+      '2025-09-15',
+      5.5
+    );
+
+    -- Monitoring Visit
+    INSERT INTO monitoring_visits(
+      id,
+      field_activity_id,
+      date_monitored,
+      crop_status,
+      soil_moisture_status,
+      avg_plant_height
+    ) VALUES(
+      3,
+      3,
+      '2025-06-01',
+      'Tillering',
+      'Moist',
+      45.0
+    );
+
+    -- Harvest Record
+    INSERT INTO harvest_records(
+      id,
+      field_activity_id,
+      harvest_date,
+      harvest_method,
+      bags_harvested,
+      avg_bag_weight_kg,
+      harvested_area_ha,
+      irrigation_adequacy
+    ) VALUES(
+      3,
+      3,
+      '2025-09-30',
+      'Manual',
+      75,
+      50.0,
+      2.3,
+      'Sufficient'
+    );
+
+    -- Damage Assessment
+    INSERT INTO damage_assessments(
+      id,
+      field_activity_id,
+      cause,
+      crop_stage,
+      soil_type,
+      severity,
+      affected_area_ha,
+      observed_pest
+    )
+    VALUES(
+      3,
+      3,
+      'Flooding',
+      'Vegetative',
+      'Clay Loam',
+      'Moderate',
+      0.2,
+      'Rice Bug'
+    );
+
+
+    -------------------------------------------
+    -------------- VIEW ---------------------
+    -------------------------------------------
+
+    SELECT
+      fa.id AS field_activity_id,
+      fa.field_id,
+      fa.data_collector_id,
+      fa.activity_type,
+      fa.collected_at,
+      fa.img_urls,
+      fa.notes,
+
+      -- Field Planning
+      fp.land_prep_date,
+      fp.planned_crop_establishment_date,
+      fp.planned_crop_establishment_method,
+      fp.total_field_area_ha,
+      fp.monitoring_field_area_sqm,
+      fp.soil_type,
+      fp.current_field_condition,
+      fp.crop_planted,
+      fp.crop_status,
+
+      -- Crop Establishment
+      ce.actual_crop_establishment_date,
+      ce.actual_crop_establishment_method,
+      ce.seedling_age_at_transplanting,
+      ce.avg_plant_distance_between,
+      ce.avg_plant_distance_within,
+      ce.seeding_rate,
+      ce.direct_seeded_method,
+      ce.rice_variety,
+      ce.rice_variety_no,
+      ce.rice_maturity_duration,
+      ce.seed_type,
+      ce.source_of_good_seeds,
+      ce.type_of_ecosystem,
+      ce.source_of_irrigation,
+      ce.type_of_irrigation,
+
+      -- Fertilization Record
+      fr.id AS fertilization_record_id,
+      fr.fertilized_area_sqm,
+
+      -- Crop Cuts
+      cc.crop_cut_date,
+      cc.avg_crop_cut_yield,
+
+      -- Monitoring Visits
+      mv.date_monitored,
+      mv.crop_status AS monitoring_crop_status,
+      mv.soil_moisture_status,
+      mv.avg_plant_height,
+
+      -- Harvest Records
+      hr.harvest_date,
+      hr.harvest_method,
+      hr.bags_harvested,
+      hr.avg_bag_weight_kg,
+      hr.harvested_area_ha,
+      hr.irrigation_adequacy,
+
+      -- Damage Assessments
+      da.cause,
+      da.crop_stage,
+      da.soil_type AS damage_soil_type,
+      da.severity,
+      da.affected_area_ha,
+      da.observed_pest
+
+    FROM field_activities fa
+    LEFT JOIN field_planning fp ON fp.field_activity_id = fa.id
+    LEFT JOIN crop_establishments ce ON ce.field_activity_id = fa.id
+    LEFT JOIN fertilization_records fr ON fr.field_activity_id = fa.id
+    LEFT JOIN crop_cuts cc ON cc.field_activity_id = fa.id
+    LEFT JOIN monitoring_visits mv ON mv.field_activity_id = fa.id
+    LEFT JOIN harvest_records hr ON hr.field_activity_id = fa.id
+    LEFT JOIN damage_assessments da ON da.field_activity_id = fa.id
+
+    WHERE fa.id = 2;
+
+
+    -------------------------------------------
+    -------------- UPDATE ---------------------
+    -------------------------------------------
+
+    -- 1. Update Field Activity
+    UPDATE field_activities
+    SET
+      field_id = 1,
+      data_collector_id = 1,
+      activity_type = 'Planting',
+      img_urls = '["image1.jpg", "image2.jpg"]',
+      notes = 'Initial field survey with photo attachments'
+    WHERE id = 2;
+
+    -- 2. Update Field Planning
+    UPDATE field_planning
+    SET
+      land_prep_date = '2025-05-01',
+      planned_crop_establishment_date = '2025-05-10',
+      planned_crop_establishment_method = 'Transplanting',
+      total_field_area_ha = 2.50,
+      monitoring_field_area_sqm = 500.00,
+      soil_type = 'Loam',
+      current_field_condition = 'Prepared',
+      crop_planted = 'Rice',
+      crop_status = 'Seedling'
+    WHERE field_activity_id = 2;
+
+    -- 3. Update Crop Establishment
+    UPDATE crop_establishments
+    SET
+      actual_crop_establishment_date = '2025-05-11',
+      actual_crop_establishment_method = 'Transplanted',
+      seedling_age_at_transplanting = 18,
+      avg_plant_distance_between = 0.25,
+      avg_plant_distance_within = 0.20,
+      seeding_rate = 80.00,
+      direct_seeded_method = 'None',
+      rice_variety = 'NSIC Rc222',
+      rice_variety_no = 'Rc222',
+      rice_maturity_duration = 120,
+      seed_type = 'Certified',
+      source_of_good_seeds = 'PhilRice',
+      type_of_ecosystem = 'Irrigated',
+      source_of_irrigation = 'Canal',
+      type_of_irrigation = 'Flood'
+    WHERE field_activity_id = 2;
+
+    -- 4. Update Fertilization Records
+    UPDATE fertilization_records
+    SET
+      fertilized_area_sqm = 480.00
+    WHERE field_activity_id = 2;
+
+    -- 5. Update Fertilizer Application (example: application_id = 1, fertilization_record_id = 1)
+    UPDATE fertilizer_applications
+    SET
+      fertilizer_type = 'Complete',
+      brand_name = 'GrowFast',
+      nitrogen_content = 14.00,
+      phosphorus_content = 14.00,
+      potassium_content = 14.00,
+      amount = 50.00,
+      unit = 'kg',
+      crop_stage_on_application = 'Early vegetative'
+    WHERE id = 1 AND fertilization_record_id = 1;
+
+    -- 6. Update Crop Cuts
+    UPDATE crop_cuts
+    SET
+      crop_cut_date = '2025-08-15',
+      avg_crop_cut_yield = 4.50
+    WHERE field_activity_id = 2;
+
+    -- 7. Update Monitoring Visits
+    UPDATE monitoring_visits
+    SET
+      date_monitored = '2025-06-01',
+      crop_status = 'Tillering',
+      soil_moisture_status = 'Moist',
+      avg_plant_height = 35.00
+    WHERE field_activity_id = 2;
+
+
+    -- 8. Update Harvest Records
+    UPDATE harvest_records
+    SET
+      harvest_date = '2025-09-20',
+      harvest_method = 'Manual',
+      bags_harvested = 60,
+      avg_bag_weight_kg = 50.00,
+      harvested_area_ha = 2.00,
+      irrigation_adequacy = 'Adequate'
+    WHERE field_activity_id = 2;
+
+    -- 9. Update Damage Assessments
+    UPDATE damage_assessments
+    SET
+      cause = 'Pest',
+      crop_stage = 'Booting',
+      soil_type = 'Loam',
+      severity = 'Moderate',
+      affected_area_ha = 0.5,
+      observed_pest = 'Brown Planthopper'
+    WHERE field_activity_id = 2;
+
+    -------------------------------------------
+    -------------- DELETE ---------------------
+    -------------------------------------------
+
+    -- 1. Delete Fertilizer Applications
+    DELETE FROM fertilizer_applications
+    WHERE fertilization_record_id IN (
+      SELECT id FROM fertilization_records WHERE field_activity_id = 2
+    );
+
+    -- 2. Delete Fertilization Records
+    DELETE FROM fertilization_records
+    WHERE field_activity_id = 2;
+
+    -- 3. Delete Crop Cuts
+    DELETE FROM crop_cuts
+    WHERE field_activity_id = 2;
+
+    -- 4. Delete Monitoring Visits
+    DELETE FROM monitoring_visits
+    WHERE field_activity_id = 2;
+
+    -- 5. Delete Harvest Records
+    DELETE FROM harvest_records
+    WHERE field_activity_id = 2;
+
+    -- 6. Delete Damage Assessments
+    DELETE FROM damage_assessments
+    WHERE field_activity_id = 2;
+
+    -- 7. Delete Crop Establishments
+    DELETE FROM crop_establishments
+    WHERE field_activity_id = 2;
+
+    -- 8. Delete Field Planning
+    DELETE FROM field_planning
+    WHERE field_activity_id = 2;
+
+    -- 9. Finally, delete Field Activity itself
+    DELETE FROM field_activities
+    WHERE id = 2;
+  `,
   manage_farmer_profiles: `
     -- CREATE: Insert a new farmer record with explicit id
     INSERT INTO farmer (id, fname, lname, birthdate, gender, phone_no, synced_at)
